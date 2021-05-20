@@ -21,7 +21,28 @@
 	</properties>
 
 	<build>
+		
 		<plugins>
+			<plugin>
+            <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.6</version>
+                 <extensions>true</extensions>
+                <configuration>
+                    <serverId>nexus</serverId>
+                    <nexusUrl>http://localhost:8091/nexus/</nexusUrl>
+                    <skipStaging>true</skipStaging>
+                </configuration>
+                <executions>
+                       <execution>
+                         <id>default-deploy</id>
+                         <phase>deploy</phase>
+                         <goals>
+                           <goal>deploy</goal>
+                         </goals>
+                       </execution>
+                </executions>   
+            </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-clean-plugin</artifactId>
@@ -39,6 +60,17 @@
 							<artifactId>mysql-connector-java</artifactId>
 						</sharedLibrary>
 					</sharedLibraries>
+					<cloudHubDeployment>
+                        <uri>https://anypoint.mulesoft.com</uri>
+                        <username>vishal5251</username>
+                        <password>Vishal@9545975251</password>
+                        <environment>Sandbox</environment>
+                        <muleVersion>4.3.0</muleVersion>
+                        <workers>1</workers>
+                        <workerType>Micro</workerType>
+                        <applicationName>customer-system-api-grp1</applicationName>
+                        <objectStoreV2>true</objectStoreV2>
+                    </cloudHubDeployment>
 					<classifier>mule-application</classifier>
 				</configuration>
 			</plugin>
@@ -57,6 +89,7 @@
 					</execution>
 				</executions>
 				<configuration>
+					<runtimeVersion>4.3.0-20210427</runtimeVersion>
 					<coverage>
 						<runCoverage>true</runCoverage>
 						<formats>
@@ -67,13 +100,8 @@
 			</plugin>
 		</plugins>
 	</build>
-
+	
 	<dependencies>
-		<dependency>
-			<groupId>org.sonarsource.scanner.maven</groupId>
-			<artifactId>sonar-maven-plugin</artifactId>
-			<version>3.6.1.1688</version>
-		</dependency>
 		<dependency>
 			<groupId>org.mule.connectors</groupId>
 			<artifactId>mule-http-connector</artifactId>
@@ -85,6 +113,11 @@
 			<artifactId>mule-sockets-connector</artifactId>
 			<version>1.2.1</version>
 			<classifier>mule-plugin</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.sonarsource.scanner.maven</groupId>
+			<artifactId>sonar-maven-plugin</artifactId>
+			<version>3.6.1.1688</version>
 		</dependency>
 		<dependency>
 			<groupId>a3cc40ce-d344-47ff-88d5-7f0117a10f52</groupId>
